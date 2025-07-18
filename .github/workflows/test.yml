@@ -1,0 +1,23 @@
+name: Run test   # GitHub Actions 탭에 표시될 이름
+on:              # Action이 언제 실행될지 설정
+  push:
+    branches: [main]  # main branch에 push될 때 실행됨
+  pull_request: 
+
+# 작업 정의
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Ubuntu 최신 버전(가상 머신)에서 실행
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4   # Ubuntu에 접속하여 최신 코드 받기 -> npm install이 가능해짐
+      - name: Setup Node
+        uses: actions/setup-node@v4 # node 설치
+        with:
+          node-version: 18          # npx, npm
+      - name: Install dependencies  # 의존성 패키지 설치
+        run: npm ci                 # npm install
+      - name: Run tests
+        run: npm test               # package.json에서 test script 실행 (Jest 동작)
+
+
